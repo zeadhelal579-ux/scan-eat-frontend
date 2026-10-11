@@ -1,0 +1,60 @@
+<!--
+  FILE: kitchen/index.html
+  PURPOSE: The live Kitchen Display board - guarded behind staff login,
+           loads open orders, connects to OrderHub over SignalR, and shows
+           status buttons per 07-REALTIME-ORDER-FLOW.md.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kitchen Display - Scan & Eat</title>
+    <link rel="stylesheet" href="css/kitchen.css">
+</head>
+<body>
+    <header class="kds-topbar">
+        <div class="brand">Scan &amp; Eat <span>Kitchen</span></div>
+        <div class="topbar-right">
+            <span id="connection-indicator">🔴 Connecting…</span>
+            <span id="staff-name"></span>
+            <button id="logout-btn">Sign Out</button>
+        </div>
+    </header>
+
+    <div id="demo-mode-banner" hidden>
+        <span id="demo-mode-banner-text"></span>
+        <button id="simulate-order-btn" hidden>Simulate Incoming Order</button>
+    </div>
+
+    <nav class="filter-tabs">
+        <button class="filter-tab active" data-status="All">All</button>
+        <button class="filter-tab" data-status="Pending">New</button>
+        <button class="filter-tab" data-status="InPreparation">Cooking</button>
+        <button class="filter-tab" data-status="Ready">Ready</button>
+    </nav>
+
+    <main>
+        <p id="board-empty-msg" hidden>No open orders right now. New tickets will appear here automatically.</p>
+        <div class="orders-board" id="orders-board"></div>
+    </main>
+
+    <!-- Official Microsoft SignalR JS client. The hub itself is ASP.NET Core
+         SignalR (currently running on .NET 10 - see the backend's own
+         back-end menu.csproj header comment for the .NET 8 -> 10 retarget);
+         the JS client and hub protocol are version-tolerant across ASP.NET
+         Core releases, so this pinned client version keeps working unchanged. -->
+    <!-- SRI: the integrity value is cdnjs's own published snippet for microsoft-signalr@8.0.7 (copied from
+         third-party documentation, NOT recomputed here - this build had no internet access). If the browser
+         console ever reports an integrity mismatch, delete the integrity/crossorigin/referrerpolicy attributes
+         or paste a fresh one from cdnjs.com ("Copy Script Tag with SRI"); the kitchen board keeps working
+         through its 10-second polling fallback in the meantime. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js" integrity="sha512-7SRCYIJtR6F8ocwW7UxW6wGKqbSyqREDbfCORCbGLatU0iugBLwyOXpzhkPyHIFdBO0K2VCu57fvP2Twgx1o2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../shared/js/config.js"></script>
+    <script src="../shared/js/auth.js"></script>
+    <script src="../shared/js/api-client.js"></script>
+    <script src="js/kitchen-demo-data.js"></script>
+    <script src="js/signalr-client.js"></script>
+    <script src="js/kitchen.js"></script>
+</body>
+</html>

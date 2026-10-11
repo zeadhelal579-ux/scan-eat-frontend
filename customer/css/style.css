@@ -1,0 +1,741 @@
+﻿/*
+  FILE: customer/css/style.css
+  PURPOSE: Visual styling for the customer-facing app (Home, Menu, Offers,
+           Cart). This is the ORIGINAL StyleSheet1.css content, unchanged,
+           because 01-PROJECT-OVERVIEW.md lists the customer UI as already
+           "Built" and 05-FRONTEND-ARCHITECTURE.md explicitly names this
+           warm cream/green/orange palette as "the one chosen" - a decided
+           brand, not something to redesign.
+  LOGIC:   Everything down to the "NEW STATES" marker near the bottom of
+           this file is byte-for-byte identical to the original. Below that
+           marker are the only additions: styling for states the static
+           HTML never needed because it never had real loading/error/empty
+           conditions - the menu is now rendered from data (see
+           customer/js/app.js), so it can legitimately be loading, empty,
+           or briefly showing sample data before a real backend responds.
+*/
+
+:root {
+    --bg-warm-cream: #FDF6F0;
+    --primary-green: #1E4D3A;
+    --secondary-green: #2A5C45;
+    --pure-white: #FFFFFF;
+    --accent-orange: #D96B43;
+    --text-muted: #6E7E75;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--bg-warm-cream);
+    color: var(--primary-green);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Fixed Header */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--pure-white);
+    box-shadow: 0 4px 12px rgba(30, 77, 58, 0.04);
+    z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nav-bar {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 5px 8px;
+    transition: color 0.2s;
+}
+
+    .nav-link.active, .nav-link:hover {
+        color: var(--primary-green);
+        border-bottom: 2px solid var(--primary-green);
+    }
+
+.cart-icon-container {
+    position: relative;
+    cursor: pointer;
+    background: var(--bg-warm-cream);
+    padding: 8px 14px;
+    border-radius: 20px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--accent-orange);
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
+/* Base Wrapper */
+.content-wrapper {
+    margin-top: 85px;
+    padding: 15px;
+    max-width: 800px; /* Centered mobile container sweet-spot */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-section {
+    display: none;
+}
+
+    .page-section.active {
+        display: block;
+        animation: fadeIn 0.35s ease-in-out;
+    }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Home Section Layout */
+.hero-image img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.about-container {
+    margin-top: 20px;
+    background: var(--pure-white);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.establishment-date {
+    font-weight: 600;
+    color: var(--accent-orange);
+    margin-bottom: 10px;
+}
+
+.certificates {
+    margin-top: 20px;
+    background-color: var(--bg-warm-cream);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+    .certificates h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .certificates ul {
+        list-style: none;
+    }
+
+    .certificates li {
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+
+/* Menu Welcome Banner */
+.welcome-banner {
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 15px;
+}
+
+    .welcome-banner h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 19px;
+        font-style: italic;
+        line-height: 1.4;
+    }
+
+/* Intelligent Smart Search Component */
+.search-section-container {
+    position: relative;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.search-bar-wrapper {
+    display: flex;
+    background: var(--pure-white);
+    border: 1.5px solid rgba(30, 77, 58, 0.15);
+    border-radius: 25px;
+    padding: 6px 15px;
+    align-items: center;
+}
+
+    .search-bar-wrapper input {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 14px;
+        color: var(--primary-green);
+    }
+
+#clear-search-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 5px;
+    display: none;
+}
+
+/* Search History Dropdown Menu */
+#search-history-dropdown {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    background: var(--pure-white);
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    z-index: 500;
+    padding: 12px;
+}
+
+.search-history-hidden {
+    display: none !important;
+}
+
+.history-header {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+#history-items-list {
+    list-style: none;
+}
+
+.history-item {
+    font-size: 14px;
+    padding: 8px 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .history-item:hover {
+        background: var(--bg-warm-cream);
+    }
+
+/* Large Immersive Image 2 Category Style */
+.categories-grid-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    scroll-behavior: smooth;
+}
+
+    .categories-grid-container::-webkit-scrollbar {
+        display: none;
+    }
+
+.category-large-card {
+    flex: 0 0 auto;
+    position: relative;
+    width: 130px;
+    height: 100px;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    border: 2.5px solid transparent;
+}
+
+    .category-large-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+.category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 20%, rgba(0,0,0,0.1));
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+}
+
+.category-large-card span {
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.category-large-card.active {
+    border-color: var(--accent-orange);
+}
+
+    .category-large-card.active img {
+        transform: scale(1.05);
+    }
+
+/* Horizontal Highlights Row - Side by Side */
+.highlights-row-layout {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+    .highlights-row-layout::-webkit-scrollbar {
+        display: none;
+    }
+
+.highlight-horizontal-box {
+    flex: 0 0 82%; /* Mobile optimized side by side display card width */
+    background: var(--pure-white);
+    padding: 15px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+    border: 1px solid rgba(30, 77, 58, 0.08);
+}
+
+.highlight-tag {
+    display: inline-block;
+    font-size: 11px;
+    background: #E8F4EE;
+    color: var(--primary-green);
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.highlight-horizontal-box h4 {
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.highlight-horizontal-box p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.highlight-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .highlight-footer .price {
+        font-weight: 700;
+        color: var(--accent-orange);
+        font-size: 14px;
+    }
+
+/* Menu Items Standard Vertical Rows */
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.menu-item {
+    display: flex;
+    background: var(--pure-white);
+    padding: 14px;
+    border-radius: 16px;
+    align-items: center;
+    gap: 14px;
+}
+
+.item-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.item-dots {
+    flex: 1;
+    border-bottom: 2px dotted #E2EAE5;
+    margin: 0 10px;
+}
+
+.item-price {
+    color: var(--secondary-green);
+    white-space: nowrap;
+}
+
+.item-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 4px 0 8px 0;
+    line-height: 1.4;
+}
+
+.add-to-cart-btn {
+    background-color: var(--primary-green);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Independent Large Offers Screen */
+.offers-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.offers-column-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.offer-card-large {
+    position: relative;
+    background: var(--pure-white);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.offer-promo-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--accent-orange);
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.offer-card-large h3 {
+    margin-bottom: 6px;
+    font-size: 16px;
+    padding-right: 65px;
+}
+
+.offer-card-large p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.offer-pricing {
+    margin-bottom: 12px;
+}
+
+.new-price {
+    font-weight: 700;
+    font-size: 17px;
+    margin-right: 8px;
+}
+
+.old-price {
+    font-size: 13px;
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+/* Basket/Cart Screen */
+.cart-wrapper {
+    background: var(--pure-white);
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.table-info-alert {
+    background-color: #E8F4EE;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.empty-cart-msg {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #F5F8F6;
+}
+
+.cart-item-info h4 {
+    font-size: 14px;
+}
+
+.cart-item-info span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.cart-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .cart-control button {
+        background: var(--bg-warm-cream);
+        border: none;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+.cart-summary-box {
+    background: var(--bg-warm-cream);
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.summary-divider {
+    border: none;
+    border-top: 1px dashed #CEDCD3;
+    margin: 8px 0;
+}
+
+.total-row {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--primary-green);
+}
+
+.submit-order-action {
+    display: block;
+    width: 100%;
+    background-color: var(--secondary-green);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+    .submit-order-action:disabled {
+        background-color: #CCC;
+        cursor: not-allowed;
+    }
+
+/* System Toast Notifications */
+#toast-notification {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-green);
+    color: white;
+    padding: 10px 22px;
+    border-radius: 20px;
+    font-size: 13px;
+    z-index: 2000;
+    transition: opacity 0.25s, visibility 0.25s;
+}
+
+.toast-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.toast-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Undo Action Dynamic Sidebar Toast */
+#undo-notification {
+    position: fixed;
+    bottom: 25px;
+    right: 20px;
+    background: #222;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 2000;
+    transition: opacity 0.25s, visibility 0.25s;
+}
+
+.undo-toast-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.undo-toast-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#undo-action-btn {
+    background: var(--accent-orange);
+    color: white;
+    border: none;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ===================== NEW STATES (added for API wiring) ===================== */
+
+/* Demo-mode banner - shown across every page when the backend is unreachable
+   and the app has fallen back to customer/js/demo-data.js (see DemoMode in
+   customer/js/api.js). Sits just under the fixed header.
+   --header-height / --banner-height are set from JS (updateHeaderOffsets()
+   in app.js) rather than hardcoded, because the header's real height varies
+   with viewport width (e.g. the brand name can wrap to two lines on very
+   narrow phones) - a fixed pixel guess here previously caused the banner to
+   overlap the header at some widths; this was caught during Playwright
+   testing (see README "Bugs Found & Fixed During Testing"). */
+#demo-mode-banner {
+    background-color: #FFF4E5;
+    color: #92580B;
+    border-bottom: 1px solid #F3D9A8;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 16px;
+    position: fixed;
+    top: var(--header-height, 84px);
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+    #demo-mode-banner[hidden] {
+        display: none;
+    }
+
+/* Pushes page content down when the banner is visible so it never overlaps
+   the header or the first section. body.has-demo-banner is toggled by
+   showDemoBanner() in app.js at the same time #demo-mode-banner is shown
+   (a plain class, not :has(), so this works in every browser). */
+body.has-demo-banner .content-wrapper {
+    margin-top: calc(var(--header-height, 84px) + var(--banner-height, 89px) + 10px);
+}
+
+.menu-empty-msg,
+.menu-load-error {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 30px 10px;
+    font-size: 14px;
+}
+
+.menu-load-error {
+    color: var(--accent-orange);
+    font-weight: 600;
+}
+
+.sold-out-badge {
+    display: inline-block;
+    background: var(--text-muted);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.highlight-add-btn {
+    padding: 5px 12px;
+    font-size: 11px;
+}
+
+.table-info-alert.table-info-warning {
+    background-color: #FCEAE0;
+    color: #B7502A;
+}

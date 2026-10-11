@@ -1,0 +1,294 @@
+/*
+  FILE: kitchen/css/kitchen.css
+  PURPOSE: Visual styling for the Kitchen Display System.
+  DESIGN RATIONALE: Deliberately NOT the customer app's warm cream theme.
+           A KDS is read at a glance, from a few feet away, often under
+           harsh kitchen lighting or steam - so this uses a dark, high-
+           contrast surface (reduces glare, easier on the eyes across a
+           long shift) with oversized type and strong per-status color
+           coding, while keeping the same green/orange brand family and
+           the same Poppins typeface as the customer app so it still reads
+           as the same product, not a different one bolted on. Admin gets
+           its own, different rationale - see the header comment in
+           admin/css/admin.css.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('../../shared/css/tokens.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--brand-green-deep);
+    color: #EDEFEC;
+    min-height: 100vh;
+}
+
+/* ---------------- Top bar ---------------- */
+.kds-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background-color: var(--brand-green);
+    border-bottom: 3px solid var(--brand-orange);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.kds-topbar .brand {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.kds-topbar .brand span { color: var(--brand-orange); }
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+}
+
+#connection-indicator { font-weight: 600; }
+
+#logout-btn {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+}
+#logout-btn:hover { background: rgba(255, 255, 255, 0.22); }
+
+/* ---------------- Demo banner ---------------- */
+#demo-mode-banner {
+    background-color: #3A2E12;
+    color: #FFD48A;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+#demo-mode-banner[hidden] { display: none; }
+
+#simulate-order-btn {
+    margin-left: 12px;
+    background: var(--brand-orange);
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+#simulate-order-btn[hidden] { display: none; }
+
+/* ---------------- Filter tabs ---------------- */
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 16px 24px 0;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    background: rgba(255, 255, 255, 0.06);
+    color: #C7D0CA;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+}
+.filter-tab.active {
+    background: var(--brand-orange);
+    border-color: var(--brand-orange);
+    color: white;
+}
+
+/* ---------------- Board ---------------- */
+.orders-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+    padding: 20px 24px 60px;
+}
+
+#board-empty-msg {
+    text-align: center;
+    color: #8FA096;
+    padding: 60px 20px;
+    font-size: 16px;
+}
+#board-empty-msg[hidden] { display: none; }
+
+.order-card {
+    background-color: #1B3226;
+    border-radius: var(--radius-md);
+    padding: 18px;
+    border-left: 6px solid var(--gray-500);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.order-card.status-Pending { border-left-color: var(--brand-orange); }
+.order-card.status-InPreparation { border-left-color: #E5B93C; }
+.order-card.status-Ready { border-left-color: #4FBE83; }
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-number {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.status-pill {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.status-Pending .status-pill { background: var(--status-pending-bg); color: var(--status-pending-fg); }
+.status-InPreparation .status-pill { background: var(--status-preparation-bg); color: var(--status-preparation-fg); }
+.status-Ready .status-pill { background: var(--status-ready-bg); color: var(--status-ready-fg); }
+
+.order-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #8FA096;
+}
+
+.order-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+}
+
+.order-items li { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+.item-qty { font-weight: 800; color: var(--brand-orange); }
+.item-notes { font-size: 12px; font-style: italic; color: #C7D0CA; }
+
+.order-card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.advance-btn {
+    flex: 1;
+    background: var(--brand-orange);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+.advance-btn:hover { filter: brightness(1.08); }
+
+.cancel-btn {
+    background: transparent;
+    color: #E88787;
+    border: 1px solid #5B3030;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ---------------- Login page ---------------- */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: #1B3226;
+    padding: 36px 30px;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 360px;
+    box-shadow: var(--shadow-card);
+}
+
+.login-card h1 { font-size: 20px; margin-bottom: 4px; }
+.login-card .subtitle { color: #8FA096; font-size: 13px; margin-bottom: 24px; }
+
+.login-card label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 14px;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    font-size: 14px;
+}
+.login-card input:focus { outline: 2px solid var(--brand-orange); }
+
+.login-card button[type="submit"] {
+    width: 100%;
+    margin-top: 22px;
+    background: var(--brand-orange);
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+.login-card button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+
+#login-error {
+    background: #3A2020;
+    color: #F3A8A8;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-top: 16px;
+}
+#login-error[hidden] { display: none; }
+
+.demo-credentials-hint {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #8FA096;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+}

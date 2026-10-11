@@ -1,0 +1,265 @@
+/*
+  FILE: admin/css/admin.css
+  PURPOSE: Visual styling for the Admin Dashboard (all 5 pages).
+  DESIGN RATIONALE: Unlike the Kitchen Display's dark operational theme,
+           Admin stays light - the person using it (the owner/manager) sits
+           with it for long stretches doing data entry and wants low eye
+           strain, not urgency. It keeps the customer app's cream/green/
+           orange brand family and the same type pairing (Playfair for
+           page titles, Poppins for everything else) for continuity, but is
+           restructured into the sidebar-plus-content layout a back-office
+           tool needs: a persistent nav rail, and content built from
+           tables/forms/cards rather than swipeable rows.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import url('../../shared/css/tokens.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--brand-cream);
+    color: var(--gray-900);
+}
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ---------------- Sidebar ---------------- */
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background-color: var(--brand-green);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.sidebar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    padding: 0 20px 22px;
+}
+.sidebar-brand span { color: var(--brand-orange); display: block; font-size: 13px; font-family: 'Poppins', sans-serif; font-weight: 600; letter-spacing: 1px; }
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.sidebar-nav a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-left: 3px solid transparent;
+}
+.sidebar-nav a:hover { background: rgba(255, 255, 255, 0.06); color: white; }
+.sidebar-nav a.active {
+    background: rgba(255, 255, 255, 0.1);
+    border-left-color: var(--brand-orange);
+    color: white;
+    font-weight: 700;
+}
+
+.sidebar-footer {
+    padding: 16px 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin-top: 16px;
+    font-size: 13px;
+}
+#admin-name { display: block; opacity: 0.8; margin-bottom: 10px; }
+.sidebar-footer #logout-btn {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 9px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+}
+.sidebar-footer #logout-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* ---------------- Content area ---------------- */
+.admin-content {
+    flex: 1;
+    padding: 28px 34px 60px;
+    max-width: 1100px;
+}
+
+.page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.page-subtitle { color: var(--brand-text-muted); font-size: 14px; margin-bottom: 24px; }
+
+#demo-mode-banner {
+    background-color: #FFF4E5;
+    color: #92580B;
+    border: 1px solid #F3D9A8;
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+#demo-mode-banner[hidden] { display: none; }
+
+/* ---------------- Cards / dashboard tiles ---------------- */
+.tile-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.tile {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    box-shadow: var(--shadow-card);
+}
+.tile .tile-label { font-size: 12px; color: var(--brand-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.tile .tile-value { font-size: 26px; font-weight: 700; color: var(--brand-green); margin-top: 6px; }
+
+.panel {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 22px;
+    box-shadow: var(--shadow-card);
+    margin-bottom: 22px;
+}
+.panel h2 { font-size: 16px; margin-bottom: 14px; }
+
+/* ---------------- Buttons ---------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 9px 16px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.btn-primary { background: var(--brand-orange); color: white; }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-secondary { background: var(--gray-100); color: var(--gray-900); }
+.btn-secondary:hover { background: var(--gray-200); }
+.btn-danger { background: #FBEAEA; color: #A13A3A; }
+.btn-danger:hover { background: #F6D8D8; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+
+.toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+
+/* ---------------- Tables ---------------- */
+table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.data-table th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--brand-text-muted);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid var(--gray-100);
+}
+table.data-table td { padding: 12px; border-bottom: 1px solid var(--gray-100); vertical-align: middle; }
+table.data-table tr:last-child td { border-bottom: none; }
+.row-actions { display: flex; gap: 6px; }
+
+.empty-state { text-align: center; padding: 40px 20px; color: var(--brand-text-muted); font-size: 14px; }
+
+/* ---------------- Badges / toggles ---------------- */
+.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.badge-available { background: var(--status-ready-bg); color: var(--status-ready-fg); }
+.badge-sold-out { background: var(--status-cancelled-bg); color: var(--status-cancelled-fg); }
+.badge-active { background: var(--status-ready-bg); color: var(--status-ready-fg); }
+.badge-inactive { background: var(--gray-100); color: var(--gray-500); }
+.badge-featured { background: var(--status-preparation-bg); color: var(--status-preparation-fg); }
+
+.toggle-switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+    position: absolute; cursor: pointer; inset: 0;
+    background-color: var(--gray-300); border-radius: 22px; transition: 0.15s;
+}
+.toggle-slider::before {
+    content: ""; position: absolute; height: 16px; width: 16px; left: 3px; bottom: 3px;
+    background-color: white; border-radius: 50%; transition: 0.15s;
+}
+.toggle-switch input:checked + .toggle-slider { background-color: var(--brand-green-soft); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+/* ---------------- Forms / modal ---------------- */
+.modal-backdrop {
+    position: fixed; inset: 0; background: rgba(20, 30, 25, 0.45);
+    display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 1000;
+}
+.modal-backdrop[hidden] { display: none; }
+.modal-box {
+    background: white; border-radius: var(--radius-lg); padding: 26px; width: 100%; max-width: 420px;
+    max-height: 90vh; overflow-y: auto;
+}
+.modal-box h3 { font-size: 17px; margin-bottom: 16px; }
+
+.form-field { margin-bottom: 14px; }
+.form-field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--gray-700); }
+.form-field input, .form-field select, .form-field textarea {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);
+    font-size: 13px; font-family: inherit;
+}
+.form-field textarea { resize: vertical; min-height: 60px; }
+.checkbox-field { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 12px; }
+.form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+
+/* ---------------- QR / Tables page ---------------- */
+.qr-box {
+    background: var(--gray-50); border: 1px dashed var(--gray-300); border-radius: var(--radius-sm);
+    width: 120px; height: 120px; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--gray-500); text-align: center; padding: 6px;
+}
+.qr-box img { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---------------- Login page (mirrors kitchen's, admin-toned) ---------------- */
+.login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: var(--brand-cream); }
+.login-card { background: white; padding: 36px 30px; border-radius: var(--radius-lg); width: 100%; max-width: 360px; box-shadow: var(--shadow-card); }
+.login-card h1 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 4px; color: var(--brand-green); }
+.login-card .subtitle { color: var(--brand-text-muted); font-size: 13px; margin-bottom: 24px; }
+.login-card label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; margin-top: 14px; }
+.login-card input { width: 100%; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--gray-300); font-size: 14px; font-family: inherit; }
+.login-card input:focus { outline: 2px solid var(--brand-orange); }
+.login-card button[type="submit"] {
+    width: 100%; margin-top: 22px; background: var(--brand-orange); color: white; border: none;
+    padding: 13px; border-radius: var(--radius-sm); font-weight: 700; font-size: 15px; cursor: pointer; font-family: inherit;
+}
+.login-card button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+#login-error { background: #FBEAEA; color: #A13A3A; padding: 10px 12px; border-radius: var(--radius-sm); font-size: 13px; margin-top: 16px; }
+#login-error[hidden] { display: none; }
+.demo-credentials-hint { margin-top: 20px; font-size: 12px; color: var(--brand-text-muted); background: var(--gray-50); padding: 10px 12px; border-radius: var(--radius-sm); }
+
+@media (max-width: 720px) {
+    .admin-layout { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: static; flex-direction: row; align-items: center; flex-wrap: wrap; padding: 12px; }
+    .sidebar-brand { padding: 0 12px 0 0; }
+    .sidebar-nav { flex-direction: row; flex-wrap: wrap; }
+    .sidebar-footer { border-top: none; margin: 0 0 0 auto; padding: 0; display: flex; align-items: center; gap: 10px; }
+    #admin-name { margin-bottom: 0; }
+    .admin-content { padding: 20px; }
+}

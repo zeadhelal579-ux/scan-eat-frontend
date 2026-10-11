@@ -1,0 +1,95 @@
+<!--
+  FILE: admin/products.html
+  PURPOSE: Product catalog management - table, add/edit modal, and the
+           one-tap Sold Out toggle, per 05-FRONTEND-ARCHITECTURE.md
+           section 4 and PATCH /api/admin/products/{id}/availability in
+           08-API-CONTRACT.md.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Scan & Eat Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-page="products">
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">Scan &amp; Eat<span>ADMIN</span></div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" data-page="dashboard">📊 Dashboard</a>
+                <a href="products.html" data-page="products">🍔 Products</a>
+                <a href="categories.html" data-page="categories">🗂️ Categories</a>
+                <a href="offers.html" data-page="offers">🎁 Offers</a>
+                <a href="tables.html" data-page="tables">🔗 Tables &amp; QR</a>
+            </nav>
+            <div class="sidebar-footer">
+                <span id="admin-name"></span>
+                <button id="logout-btn">Sign Out</button>
+            </div>
+        </aside>
+
+        <main class="admin-content">
+            <h1 class="page-title">Products</h1>
+            <p class="page-subtitle">Everything on the menu. Toggle a switch to mark something sold out instantly.</p>
+
+            <div id="demo-mode-banner" hidden><span id="demo-mode-banner-text"></span></div>
+
+            <div class="panel">
+                <div class="toolbar">
+                    <input type="text" id="product-search" placeholder="Search products..." style="padding:9px 12px;border:1px solid var(--gray-300);border-radius:var(--radius-sm);font-size:13px;width:220px;">
+                    <button class="btn btn-primary" id="add-product-btn">+ Add Product</button>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Product</th><th>Category</th><th>Price</th><th>Available</th><th></th></tr>
+                    </thead>
+                    <tbody id="products-table-body"></tbody>
+                </table>
+                <p class="empty-state" id="products-empty-msg" hidden>No products match your search.</p>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="product-modal" hidden>
+        <div class="modal-box">
+            <h3 id="product-modal-title">Add Product</h3>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                <div class="form-field">
+                    <label for="product-name">Name</label>
+                    <input type="text" id="product-name" required>
+                </div>
+                <div class="form-field">
+                    <label for="product-category">Category</label>
+                    <select id="product-category" required></select>
+                </div>
+                <div class="form-field">
+                    <label for="product-price">Price (EGP)</label>
+                    <input type="number" id="product-price" min="1" step="1" required>
+                </div>
+                <div class="form-field">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description" required></textarea>
+                </div>
+                <div class="form-field">
+                    <label for="product-image">Image URL</label>
+                    <input type="url" id="product-image" placeholder="https://...">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="product-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="product-save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../shared/js/config.js"></script>
+    <script src="../shared/js/auth.js"></script>
+    <script src="../shared/js/api-client.js"></script>
+    <script src="js/admin-demo-data.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+/*
+  FILE: shared/css/tokens.css
+  PURPOSE: Design tokens (CSS custom properties) shared by the Kitchen Display
+           System and the Admin Dashboard. NOT used by the customer app, which
+           keeps its own copy of the brand colors in customer/css/style.css so
+           it stays a fully self-contained, independently-deployable folder
+           (see 05-FRONTEND-ARCHITECTURE.md, "why three separate front-ends").
+  LOGIC:   - The first block repeats the customer app's exact brand palette so
+             all three tools are recognizably one product.
+           - The second block adds tokens that only staff tools need: order
+             status colors (Pending/InPreparation/Ready/Delivered/Cancelled)
+             and a neutral gray scale for tables, borders and disabled states.
+           - Kitchen and Admin each layer their own theme on top of these
+             tokens in kitchen.css / admin.css (dark operational display for
+             Kitchen, light data-dense layout for Admin) - see the header
+             comments in those files for the reasoning.
+*/
+
+:root {
+    /* Brand palette - identical values to customer/css/style.css by design */
+    --brand-cream: #FDF6F0;
+    --brand-green: #1E4D3A;
+    --brand-green-deep: #14352A;
+    --brand-green-soft: #2A5C45;
+    --brand-white: #FFFFFF;
+    --brand-orange: #D96B43;
+    --brand-text-muted: #6E7E75;
+
+    /* Order status colors - used consistently on every status pill/badge
+       across the Kitchen Display and the Admin Dashboard */
+    --status-pending-bg: #FCEAE0;
+    --status-pending-fg: #B7502A;
+    --status-preparation-bg: #FDF3D6;
+    --status-preparation-fg: #92700B;
+    --status-ready-bg: #E1F0E7;
+    --status-ready-fg: #1E4D3A;
+    --status-delivered-bg: #E9ECEA;
+    --status-delivered-fg: #5B6660;
+    --status-cancelled-bg: #F7E4E4;
+    --status-cancelled-fg: #A13A3A;
+
+    /* Neutral scale for admin tables, borders, disabled UI */
+    --gray-50: #FAFAF9;
+    --gray-100: #F1F0ED;
+    --gray-200: #E4E2DD;
+    --gray-300: #CFCCC4;
+    --gray-500: #8A8579;
+    --gray-700: #4B473E;
+    --gray-900: #24221D;
+
+    /* Type scale (shared sizing rhythm; each app picks its own font-family) */
+    --step-xs: 12px;
+    --step-sm: 13px;
+    --step-base: 14px;
+    --step-md: 16px;
+    --step-lg: 19px;
+    --step-xl: 24px;
+    --step-2xl: 30px;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --shadow-card: 0 4px 14px rgba(20, 40, 30, 0.08);
+}

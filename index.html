@@ -1,0 +1,117 @@
+<!--
+  FILE: index.html
+  PURPOSE: A small launcher page at the site root so the bare domain shows the
+           three apps (customer / kitchen / admin) instead of a 404. Real
+           customers never see it: their QR codes open
+           customer/index.html?table=<token> directly.
+  LOGIC:   - Colors/fonts match the customer app's theme (customer/css/style.css).
+           - Links are RELATIVE so the folder works at a domain root (Vercel)
+             or under a sub-path (GitHub Pages project site) unchanged.
+           - landing.js reads shared/js/config.js and shows whether the apps
+             are in demo mode (no BACKEND_URL) or connected to a backend.
+           - No credentials are printed here (it is a public page).
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan & Eat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-warm-cream: #FDF6F0;
+            --primary-green: #1E4D3A;
+            --secondary-green: #2A5C45;
+            --pure-white: #FFFFFF;
+            --accent-orange: #D96B43;
+            --text-muted: #6E7E75;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-warm-cream);
+            color: var(--primary-green);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .card {
+            background: var(--pure-white);
+            border-radius: 20px;
+            max-width: 480px;
+            width: 100%;
+            padding: 40px 32px;
+            box-shadow: 0 10px 40px rgba(30, 77, 58, 0.12);
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-style: italic;
+            font-size: 2rem;
+            margin: 0 0 4px;
+        }
+        .subtitle { color: var(--text-muted); margin: 0 0 28px; font-size: 0.95rem; }
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(30, 77, 58, 0.08);
+            color: var(--secondary-green);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 28px;
+        }
+        .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #3fae6a; }
+        .status.demo::before { background: var(--accent-orange); }
+        .links { display: grid; gap: 12px; text-align: left; }
+        a.link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: var(--primary-green);
+            background: var(--bg-warm-cream);
+            border: 1px solid rgba(30, 77, 58, 0.1);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-weight: 600;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        a.link:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(30, 77, 58, 0.1); }
+        a.link span.desc { display: block; font-weight: 400; color: var(--text-muted); font-size: 0.8rem; margin-top: 2px; }
+        a.link .arrow { color: var(--accent-orange); font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Scan &amp; Eat</h1>
+        <p class="subtitle">Scan, order, enjoy — straight from the table</p>
+        <div class="status" id="mode-badge">Frontend</div>
+        <div class="links">
+            <a class="link" href="customer/index.html">
+                <span>Customer App<span class="desc">Scan a table's QR, or open directly to browse</span></span>
+                <span class="arrow">&rarr;</span>
+            </a>
+            <a class="link" href="kitchen/login.html">
+                <span>Kitchen Display<span class="desc">Staff login - live incoming orders</span></span>
+                <span class="arrow">&rarr;</span>
+            </a>
+            <a class="link" href="admin/login.html">
+                <span>Admin Dashboard<span class="desc">Staff login - menu, offers, tables &amp; QR codes</span></span>
+                <span class="arrow">&rarr;</span>
+            </a>
+        </div>
+    </div>
+    <script src="shared/js/config.js"></script>
+    <script src="landing.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Staff-only apps: keep them out of search results (the real protection is the
+# login each page enforces, this is just one small extra layer).
+User-agent: *
+Disallow: /admin/
+Disallow: /kitchen/

@@ -1,0 +1,96 @@
+<!--
+  FILE: admin/offers.html
+  PURPOSE: Combo offer management, including the IsFeatured flag that
+           controls the "Best Offer" highlight card on the customer Menu
+           page - see 03-DATABASE-SCHEMA.md's Offer.IsFeatured.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offers - Scan & Eat Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-page="offers">
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">Scan &amp; Eat<span>ADMIN</span></div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" data-page="dashboard">📊 Dashboard</a>
+                <a href="products.html" data-page="products">🍔 Products</a>
+                <a href="categories.html" data-page="categories">🗂️ Categories</a>
+                <a href="offers.html" data-page="offers">🎁 Offers</a>
+                <a href="tables.html" data-page="tables">🔗 Tables &amp; QR</a>
+            </nav>
+            <div class="sidebar-footer">
+                <span id="admin-name"></span>
+                <button id="logout-btn">Sign Out</button>
+            </div>
+        </aside>
+
+        <main class="admin-content">
+            <h1 class="page-title">Offers</h1>
+            <p class="page-subtitle">Combo deals shown on the Offers page. Exactly one can be featured on the Menu page at a time.</p>
+
+            <div id="demo-mode-banner" hidden><span id="demo-mode-banner-text"></span></div>
+
+            <div class="panel">
+                <div class="toolbar">
+                    <span></span>
+                    <button class="btn btn-primary" id="add-offer-btn">+ Add Offer</button>
+                </div>
+                <table class="data-table">
+                    <thead><tr><th>Title</th><th>Price</th><th>Status</th><th>Featured</th><th></th></tr></thead>
+                    <tbody id="offers-table-body"></tbody>
+                </table>
+                <p class="empty-state" id="offers-empty-msg" hidden>No offers yet.</p>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="offer-modal" hidden>
+        <div class="modal-box">
+            <h3 id="offer-modal-title">Add Offer</h3>
+            <form id="offer-form">
+                <input type="hidden" id="offer-id">
+                <div class="form-field">
+                    <label for="offer-title">Title</label>
+                    <input type="text" id="offer-title" required>
+                </div>
+                <div class="form-field">
+                    <label for="offer-description">Description</label>
+                    <textarea id="offer-description" required></textarea>
+                </div>
+                <div class="form-field">
+                    <label for="offer-old-price">Old Price (EGP)</label>
+                    <input type="number" id="offer-old-price" min="1" step="1" required>
+                </div>
+                <div class="form-field">
+                    <label for="offer-new-price">New Price (EGP)</label>
+                    <input type="number" id="offer-new-price" min="1" step="1" required>
+                </div>
+                <div class="checkbox-field">
+                    <input type="checkbox" id="offer-active">
+                    <label for="offer-active" style="margin:0;">Active (visible on the Offers page)</label>
+                </div>
+                <div class="checkbox-field">
+                    <input type="checkbox" id="offer-featured">
+                    <label for="offer-featured" style="margin:0;">Featured (shown as "Best Offer" on the Menu page)</label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="offer-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="offer-save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../shared/js/config.js"></script>
+    <script src="../shared/js/auth.js"></script>
+    <script src="../shared/js/api-client.js"></script>
+    <script src="js/admin-demo-data.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/offers.js"></script>
+</body>
+</html>

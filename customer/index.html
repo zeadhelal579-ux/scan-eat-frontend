@@ -1,0 +1,137 @@
+<!--
+  FILE: customer/index.html
+  PURPOSE: The customer-facing single-page app (Home / Menu / Offers / Cart).
+  LOGIC:   This is HTMLPage1.html reorganized into its new customer/ home
+           (see 05-FRONTEND-ARCHITECTURE.md section 1's recommended layout),
+           with one structural change: the category cards, the two
+           highlight boxes, the 30 menu items and the 5 offer cards are no
+           longer typed directly into this file - they are empty containers
+           now, filled in by customer/js/app.js from customer/js/api.js
+           (which calls the real backend, falling back to
+           customer/js/demo-data.js if it isn't running yet). Every element
+           id the original inline JS depended on is preserved so the cart/
+           router/search behaviour carries over unchanged.
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan & Eat - Premium Digital Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <h1 class="brand-name">Scan & Eat</h1>
+            <nav class="nav-bar">
+                <a href="#" class="nav-link active" data-target="home">Home</a>
+                <a href="#" class="nav-link" data-target="menu">Menu</a>
+                <a href="#" class="nav-link" data-target="offers">Offers</a>
+            </nav>
+            <div class="cart-icon-container" data-target="cart">
+                <span class="cart-icon">🛒</span>
+                <span id="cart-count" class="cart-badge">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div id="demo-mode-banner" hidden></div>
+
+    <main class="content-wrapper">
+
+        <section id="home" class="page-section active">
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" alt="Restaurant Interior">
+            </div>
+            <div class="about-container">
+                <h2>About Scan & Eat</h2>
+                <p class="establishment-date" id="establishment-date">&nbsp;</p>
+                <p class="description" id="about-description">Loading...</p>
+
+                <div class="certificates">
+                    <h3>Quality & Awards</h3>
+                    <ul id="certificates-list"></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu" class="page-section">
+            <div class="welcome-banner">
+                <h2>Welcome to our restaurant Scan & Eat, have a nice meal</h2>
+            </div>
+
+            <div class="search-section-container">
+                <div class="search-bar-wrapper">
+                    <input type="text" id="menu-search-input" placeholder="Search for your favorite dish...">
+                    <button id="clear-search-btn">✕</button>
+                </div>
+                <div id="search-history-dropdown" class="search-history-hidden">
+                    <div class="history-header">Recent Searches:</div>
+                    <ul id="history-items-list"></ul>
+                </div>
+            </div>
+
+            <!-- Populated by renderCategories() in app.js: "All Dishes" + every
+                 CategoryDto returned by GET /api/categories -->
+            <div class="categories-grid-container" id="categories-grid-container"></div>
+
+            <!-- Populated by renderHighlights() in app.js: the computed best
+                 seller (GET /api/products/best-sellers) and the featured
+                 offer (Offer.IsFeatured from GET /api/offers) -->
+            <div id="menu-highlights" class="highlights-row-layout"></div>
+
+            <!-- Populated by renderMenuList() in app.js: filtered ProductDto[]
+                 from GET /api/products, re-rendered on every search/category
+                 change -->
+            <div class="menu-list" id="main-menu-items-wrapper">
+                <p class="menu-empty-msg">Loading menu…</p>
+            </div>
+        </section>
+
+        <section id="offers" class="page-section">
+            <div class="offers-header">
+                <h2>Exclusive Savings & Combo Offers 🎁</h2>
+            </div>
+            <!-- Populated by renderOffers() in app.js from GET /api/offers -->
+            <div class="offers-column-grid" id="offers-grid-container"></div>
+        </section>
+
+        <section id="cart" class="page-section">
+            <div class="cart-wrapper">
+                <h2>Your Ordered Items</h2>
+                <div id="table-number-display" class="table-info-alert">Scanning Table Number QR...</div>
+
+                <div id="cart-items-container" class="cart-items-list">
+                    <p class="empty-cart-msg">Your basket is currently empty. Visit the Menu to add delicious meals!</p>
+                </div>
+
+                <div class="cart-summary-box">
+                    <div class="summary-row"><span>Subtotal:</span><span id="subtotal-price">EGP 0</span></div>
+                    <div class="summary-row"><span>VAT & Services (14%):</span><span id="tax-price">EGP 0</span></div>
+                    <hr class="summary-divider">
+                    <div class="summary-row total-row"><span>Total Due:</span><span id="total-price">EGP 0</span></div>
+                </div>
+
+                <button id="submit-order-btn" class="submit-order-action" disabled>Send Order to Kitchen</button>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast-notification" class="toast-hidden">Item added to basket!</div>
+    <div id="undo-notification" class="undo-toast-hidden">
+        <span id="undo-msg">Item removed.</span>
+        <button id="undo-action-btn">Undo</button>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/demo-data.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

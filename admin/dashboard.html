@@ -1,0 +1,61 @@
+<!--
+  FILE: admin/dashboard.html
+  PURPOSE: Landing page after admin login - summary numbers and best
+           sellers, per 05-FRONTEND-ARCHITECTURE.md section 4.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Scan & Eat Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body data-page="dashboard">
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">Scan &amp; Eat<span>ADMIN</span></div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" data-page="dashboard">📊 Dashboard</a>
+                <a href="products.html" data-page="products">🍔 Products</a>
+                <a href="categories.html" data-page="categories">🗂️ Categories</a>
+                <a href="offers.html" data-page="offers">🎁 Offers</a>
+                <a href="tables.html" data-page="tables">🔗 Tables &amp; QR</a>
+            </nav>
+            <div class="sidebar-footer">
+                <span id="admin-name"></span>
+                <button id="logout-btn">Sign Out</button>
+            </div>
+        </aside>
+
+        <main class="admin-content">
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-subtitle">A quick look at how things are going today.</p>
+
+            <div id="demo-mode-banner" hidden><span id="demo-mode-banner-text"></span></div>
+
+            <div class="tile-row" id="summary-tiles">
+                <div class="tile"><div class="tile-label">Orders Today</div><div class="tile-value" id="tile-orders-today">—</div></div>
+                <div class="tile"><div class="tile-label">Revenue Today</div><div class="tile-value" id="tile-revenue-today">—</div></div>
+                <div class="tile"><div class="tile-label">Avg. Order Value</div><div class="tile-value" id="tile-avg-order">—</div></div>
+                <div class="tile"><div class="tile-label">Active Tables</div><div class="tile-value" id="tile-active-tables">—</div></div>
+            </div>
+
+            <div class="panel">
+                <h2>🔥 Best Sellers (last 30 days)</h2>
+                <table class="data-table">
+                    <thead><tr><th>Product</th><th>Category</th><th>Orders</th><th>Price</th></tr></thead>
+                    <tbody id="best-sellers-body"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="../shared/js/config.js"></script>
+    <script src="../shared/js/auth.js"></script>
+    <script src="../shared/js/api-client.js"></script>
+    <script src="js/admin-demo-data.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
